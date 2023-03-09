@@ -1,4 +1,5 @@
 class ProjectsController < ApplicationController
+    before_action :authenticate_user!
 
     def index
         @project = Project.new
@@ -9,7 +10,7 @@ class ProjectsController < ApplicationController
     end
 
     def show
-        @project = Project.find(params[:id])
+        @project = current_user.projects.find(params[:id])
         @session = Session.new
         @milestone = Milestone.new
         @sessions_by_day = @project.for_line_chart
